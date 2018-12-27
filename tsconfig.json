@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "module": "es2015",
+    "noImplicitAny": false,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "strictNullChecks": false,
+    "sourceMap": false,
+    "outDir": "./build",
+    "target": "es5",
+    "jsx": "react",
+    "lib":["es6"]
+  },
+  "include": ["src/**/*", "src/*"],
+  "types": ["react"]
+}
