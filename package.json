@@ -1,41 +1,43 @@
 {
-  "name": "karin",
-  "version": "0.1.0",
-  "description": "",
-  "main": "build/node/index.js",
-  "browser":"build/xhr/index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/vaheqelyan/karin.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/vaheqelyan/karin/issues"
-  },
-  "homepage": "https://github.com/vaheqelyan/karin#readme",
-  "devDependencies": {
-    "@types/node": "^10.12.18",
-    "concurrently": "^4.1.0",
-    "husky": "^1.2.0",
-    "rollup": "^0.51.3",
-    "rollup-plugin-alias": "^1.4.0",
-    "rollup-plugin-babel": "^3.0.4",
-    "rollup-plugin-commonjs": "^8.2.6",
-    "rollup-plugin-node-builtins": "^2.1.2",
-    "rollup-plugin-node-resolve": "^3.3.0",
-    "rollup-plugin-prettier": "^0.4.0",
-    "rollup-plugin-replace": "^2.0.0",
-    "rollup-plugin-typescript2": "^0.14.0",
-    "rollup-watch": "^4.3.1",
-    "tslint": "^5.10.0",
-    "tslint-config-prettier": "^1.17.0",
-    "typescript": "^2.8.3"
-  },
-  "dependencies": {
-    "is-node": "^1.0.2"
-  }
+	"name": "karin",
+	"version": "0.1.0",
+	"description": "",
+	"main": "build/node/index.js",
+	"browser": "build/xhr/index.js",
+	"scripts": {
+		"pretty": "prettier --config .prettierrc --write \"src/**/*.ts\" \"src/**/**/*.ts\" \"src/*.ts\" \"package.json\" \"tsconfig.json\" ",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/vaheqelyan/karin.git"
+	},
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/vaheqelyan/karin/issues"
+	},
+	"homepage": "https://github.com/vaheqelyan/karin#readme",
+	"devDependencies": {
+		"@types/node": "^10.12.18",
+		"ava": "^1.0.1",
+		"concurrently": "^4.1.0",
+		"husky": "^1.2.0",
+		"rollup": "^0.51.3",
+		"rollup-plugin-alias": "^1.4.0",
+		"rollup-plugin-babel": "^3.0.4",
+		"rollup-plugin-commonjs": "^8.2.6",
+		"rollup-plugin-node-builtins": "^2.1.2",
+		"rollup-plugin-node-resolve": "^3.3.0",
+		"rollup-plugin-prettier": "^0.4.0",
+		"rollup-plugin-replace": "^2.0.0",
+		"rollup-plugin-typescript2": "^0.14.0",
+		"rollup-watch": "^4.3.1",
+		"tslint": "^5.10.0",
+		"tslint-config-prettier": "^1.17.0",
+		"typescript": "^2.8.3"
+	},
+	"dependencies": {
+		"is-node": "^1.0.2"
+	}
 }
