@@ -1,3 +1,3 @@
-export default function ajax() {
-	console.log('browser');
-}
+import get from "./get";
+
+export { get };
