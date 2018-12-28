@@ -5,6 +5,8 @@
 	"main": "build/node/index.js",
 	"browser": "build/xhr/index.js",
 	"scripts": {
+		"build": "rollup -c",
+		"preversion": "concurrently \"npm run build\" \"npm run pretty\"",
 		"pretty": "prettier --config .prettierrc --write \"src/**/*.ts\" \"src/**/**/*.ts\" \"src/*.ts\" \"package.json\" \"tsconfig.json\" ",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
