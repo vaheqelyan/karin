@@ -1,6 +1,6 @@
 {
 	"name": "karin",
-	"version": "0.2.0",
+	"version": "0.2.1",
 	"description": "",
 	"main": "build/node/index.js",
 	"browser": "build/xhr/index.js",
