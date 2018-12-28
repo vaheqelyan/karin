@@ -1,84 +1,95 @@
-import * as http from "http";
-import * as https from "https";
+import nodeGet from "./http/get";
+import { parse } from "url";
 
-function dataBody(encode, contentType) {
-	if (encode) {
-		if (encode === "json") {
-			return "json";
-		} else if (encode === "buff") {
-			return "buff";
-		}
+var url = require("url");
+
+function clearUrl(url, encodeIndex) {
+	if (url[0] === ";") {
+		url = url.slice(1);
 	}
-	return "raw";
+	if (encodeIndex !== null) {
+		url = url.slice(0, encodeIndex);
+	}
+	return url;
 }
 
-export default function get(url, params, parse, encode) {
-	var protocol: any = parse.protocol === "https:" ? https : http;
-
-	return new Promise((resolve, reject) => {
-		var options: http.RequestOptions = {
-			hostname: parse.hostname,
-			path: parse.path,
-			headers: {
-				...params.headers
-			}
+function getEncode(url) {
+	var index = url.lastIndexOf(" as ");
+	if (index !== -1) {
+		return {
+			encode: url.slice(index + 4, url.length),
+			indexOf: index,
 		};
-		var req = protocol.get(
-			options,
-			(res: http.IncomingMessage): void => {
-				res.setEncoding("utf8");
+	}
 
-				var raw = "";
+	return { encode: null, indexOf: null };
+}
 
-				res.on("data", chunk => {
-					raw += chunk;
-				});
+export default function get(chunks, ...interpolations) {
+	const isBounded = this && this !== global; // plz do not talk me off too much
 
-				res.on("end", () => {
-					const contentType = res.headers["content-type"];
-					// var content = dataBody(encode, contentType);
-					var finalData = null;
-					if (encode) {
-						switch (encode) {
-							case "json":
-								finalData = JSON.parse(raw);
-								break;
-							case "buf":
-								finalData = Buffer.from(raw, "utf8");
-								break;
-							case "string":
-								finalData = raw.toString();
-								break;
-							case "raw":
-								finalData = raw;
-								break;
-						}
-					} else {
-						finalData = raw
-					}
+	var str = "";
 
-					resolve({
-						message: res.statusMessage,
-						status: res.statusCode,
-						headers: res.headers,
-						data: finalData
-					});
-				});
-			}
-		);
+	var settings = {};
 
-		// Timeout
-		if ("timeout" in params) {
-			req.setTimeout(params.timeout, function() {
-				req.abort();
-			});
-			req.on("error", function(err: any) {
-				if (err.code === "ECONNRESET") {
-					reject("Timeout occurs");
+	for (var i = 0; i < chunks.length; i++) {
+		var key = chunks[i];
+		var value = interpolations[i];
+
+		if (value !== undefined) {
+			if (typeof value === "object") {
+				if (i === 0 && chunks[i + 1].indexOf(isBounded ? ";" : ";http") !== -1) {
+					settings = { ...value };
+					continue;
 				}
-				reject(err);
-			});
+
+				if (key[key.length - 1] === "?") {
+					var generate = Object.keys(value)
+						.map(function(prop) {
+							return [prop, value[prop]].map(encodeURIComponent).join("=");
+						})
+						.join("&");
+					str += `${key}${generate}`;
+				} else {
+					var generate = Object.keys(value)
+						.map(function(prop) {
+							return [prop, value[prop]].map(encodeURIComponent).join("/");
+						})
+						.join("/");
+					str += `${key}${generate}`;
+				}
+
+				// end
+				continue;
+			}
+
+			value += "";
+		} else {
+			str += key;
+			continue;
 		}
-		// End timeout
-	});
+
+		value += "";
+
+		if (/[a-z]/.test(key[key.length - 1])) {
+			str += `${key}/${value}`;
+		} else {
+			str += `${key}${value}`;
+		}
+	}
+
+	var encode = getEncode(str);
+
+	var normalizeUrl = clearUrl(str, encode.indexOf);
+
+	if (isBounded) {
+		if (this.origin) {
+			normalizeUrl = `${this.origin}${normalizeUrl}`;
+		}
+		settings = Object.assign(this, settings);
+	}
+
+	const parseUrl = parse(normalizeUrl);
+
+	return nodeGet(normalizeUrl, settings, parseUrl, encode);
 }
