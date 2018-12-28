@@ -83,14 +83,14 @@ function get(chunks, ...interpolations) {
 		if (this.origin) {
 			normalizeUrl = `${this.origin}${normalizeUrl}`;
 		}
-		settings = Object.assign(this, settings);
+		settings ={
+			...this,
+			...settings,
+			headers: {
+				...this.headers
+			}
+		};
 	}
-	// headers...
-	settings = {
-		...settings,
-		headers: { ...this.headers },
-	};
-
 	const parseUrl = new URL(normalizeUrl);
 	return xhrGet(normalizeUrl, settings, parseUrl, encode);
 }
