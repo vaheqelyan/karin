@@ -1,5 +1,25 @@
 import headersToObjet from "./getHeaders";
 
+function dataBody(contentType, encode, raw) {
+	if (encode.encode === null) {
+		if (/^application\/json/.test(contentType)) {
+			return JSON.parse(raw);
+		}
+	} else {
+		let final = null;
+		switch (encode.encode) {
+			case "json":
+				final = JSON.parse(raw);
+				break;
+
+			case "raw":
+				final = raw;
+				break;
+		}
+		return final;
+	}
+}
+
 export default function xhrGet(url, params, parse, encode) {
 	return new Promise((resolve, reject) => {
 		var xhr = new XMLHttpRequest();
