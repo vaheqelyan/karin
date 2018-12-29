@@ -1,3 +1,5 @@
+import headersToObjet from "./getHeaders";
+
 export default function xhrGet(url, params, parse, encode) {
 	return new Promise((resolve, reject) => {
 		var xhr = new XMLHttpRequest();
@@ -11,6 +13,14 @@ export default function xhrGet(url, params, parse, encode) {
 		}
 		xhr.onload = function() {
 			if (this.status == 200) {
+				var headers = headersToObjet(xhr.getAllResponseHeaders());
+				var contentType = headers["Content-Type"];
+				resolve({
+					headers: headers,
+					message: this.statusText,
+					status: this.status,
+					data: dataBody(contentType, encode, this.response),
+				});
 				resolve(this.response);
 			} else {
 				var error = new Error(this.statusText);
