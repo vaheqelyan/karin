@@ -33,8 +33,8 @@ export default function xhrGet(url, params, parse, encode) {
 		}
 		xhr.onload = function() {
 			if (this.status == 200) {
-				var headers = headersToObjet(xhr.getAllResponseHeaders());
-				var contentType = headers["Content-Type"];
+				var headers = headersToObjet(xhr.getAllResponseHeaders().toLowerCase());
+				var contentType = headers["content-type"];
 				resolve({
 					headers: headers,
 					message: this.statusText,
