@@ -83,12 +83,12 @@ function get(chunks, ...interpolations) {
 		if (this.origin) {
 			normalizeUrl = `${this.origin}${normalizeUrl}`;
 		}
-		settings ={
+		settings = {
 			...this,
 			...settings,
 			headers: {
-				...this.headers
-			}
+				...this.headers,
+			},
 		};
 	}
 	const parseUrl = new URL(normalizeUrl);
