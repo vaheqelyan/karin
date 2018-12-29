@@ -27,7 +27,7 @@ function get(chunks, ...interpolations) {
 
 	var str = "";
 
-	var settings = {};
+	var settings = { headers: {} };
 
 	for (var i = 0; i < chunks.length; i++) {
 		var key = chunks[i];
