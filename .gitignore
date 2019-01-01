@@ -64,3 +64,4 @@ typings/
 build/
 test.html
 test.js
+server.js
