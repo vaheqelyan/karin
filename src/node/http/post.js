@@ -6,7 +6,7 @@ export default function get(url, params, parse, postData) {
   var protocol = parse.protocol === "https:" ? https : http;
   return new Promise((resolve, reject) => {
     var post_data = postData;
-    // An object of options to indicate where to post to
+
     var post_options = {
       host: parse.hostname,
       port: parse.port,
@@ -18,7 +18,6 @@ export default function get(url, params, parse, postData) {
       },
     };
 
-    // Set up the request
     var post_req = protocol.request(post_options, function(res) {
       res.setEncoding("utf8");
       var raw = "";
@@ -39,7 +38,6 @@ export default function get(url, params, parse, postData) {
     });
     post_req.on("error", reject);
 
-    // post the data
     post_req.write(post_data);
     post_req.end();
   });
