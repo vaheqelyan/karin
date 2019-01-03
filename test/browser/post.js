@@ -21,7 +21,6 @@ test("Creating a resource in jsonplaceholder with the json option", async t => {
   }
 });
 
-
 test("Creating a resource in jsonplaceholder and getting a raw response with the origin parameter set", async t => {
   t.plan(2);
 
