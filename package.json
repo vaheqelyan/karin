@@ -3,13 +3,14 @@
   "version": "0.3.2",
   "description": "",
   "main": "build/node/index.js",
-  "browser": "build/xhr/index.js",
+  "browser": "build/browser/index.umd.js",
   "scripts": {
     "test": "ava",
     "preversion": "npm-run-all build:node build:browser test",
 
     "pretty":
       "prettier --config .prettierrc --write \"test/**/*.js\" \"src/**/*.js\" \"src/**/**/*.js\" \"src/*.js\" \"package.json\" \"tsconfig.json\" ",
+    "build":"npm-run-all build:node build:browser",
     "build:node":
       "microbundle build -i src/node/index.js --no-compress --no-sourcemap -f cjs --target node",
     "build:browser":
