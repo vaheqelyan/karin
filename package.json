@@ -1,20 +1,16 @@
 {
   "name": "karin",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "description": "",
   "main": "build/node/index.js",
   "browser": "build/browser/index.umd.js",
   "scripts": {
     "test": "ava",
     "preversion": "npm-run-all build:node build:browser test",
-
-    "pretty":
-      "prettier --config .prettierrc --write \"test/**/*.js\" \"src/**/*.js\" \"src/**/**/*.js\" \"src/*.js\" \"package.json\" \"tsconfig.json\" ",
-    "build":"npm-run-all build:node build:browser",
-    "build:node":
-      "microbundle build -i src/node/index.js --no-compress --no-sourcemap -f cjs --target node",
-    "build:browser":
-      "microbundle build -i src/xhr/index.js -o build/browser/index.js --no-compress --no-sourcemap -f umd --target browser --name Karin"
+    "pretty": "prettier --config .prettierrc --write \"test/**/*.js\" \"src/**/*.js\" \"src/**/**/*.js\" \"src/*.js\" \"package.json\" \"tsconfig.json\" ",
+    "build": "npm-run-all build:node build:browser",
+    "build:node": "microbundle build -i src/node/index.js --no-compress --no-sourcemap -f cjs --target node",
+    "build:browser": "microbundle build -i src/xhr/index.js -o build/browser/index.js --no-compress --no-sourcemap -f umd --target browser --name Karin"
   },
   "repository": {
     "type": "git",
@@ -40,8 +36,12 @@
   },
   "dependencies": {},
   "ava": {
-    "files": ["test/**/*.js"],
+    "files": [
+      "test/**/*.js"
+    ],
     "verbose": true,
-    "require": ["./test/helpers/setup-browser-env.js"]
+    "require": [
+      "./test/helpers/setup-browser-env.js"
+    ]
   }
 }
