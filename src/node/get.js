@@ -19,9 +19,8 @@ export default function get(param = {}, ...interpolations) {
         if (b === "raw") {
           settings.encode = "raw";
         }
-         if (b === "json") {
+        if (b === "json") {
           settings.encode = "json";
-
         }
       });
 
@@ -44,10 +43,9 @@ export default function get(param = {}, ...interpolations) {
       if (b === "raw") {
         settings.encode = "raw";
       }
-       if (b === "json") {
-          settings.encode = "json";
-
-        }
+      if (b === "json") {
+        settings.encode = "json";
+      }
     });
 
     const parseUrl = parse(normalizeUrl);
