@@ -50,6 +50,9 @@ export default function post(param = {}, ...interpolations) {
       if (b === "raw") {
         settings.encode = "raw";
       }
+      if (b === "json") {
+        settings.headers["Content-Type"] = "application/json";
+      }
     });
 
     if (typeof postData === "object") {
