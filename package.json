@@ -9,12 +9,12 @@
     "test": "ava",
     "server": "node server",
     "build": "rollup -c",
-    "preversion": "npm run build",
+    "preversion": "npm-run-all build:node build:browser",
     "pretty":
       "prettier --config .prettierrc --write \"test/**/*.js\" \"src/**/*.js\" \"src/**/**/*.js\" \"src/*.js\" \"package.json\" \"tsconfig.json\" ",
-    "build-node":
+    "build:node":
       "microbundle build -i src/node/index.js --no-compress --no-sourcemap -f cjs --target node",
-    "build-browser":
+    "build:browser":
       "microbundle build -i src/xhr/index.js -o build/browser/index.js --no-compress --no-sourcemap -f umd --target browser --name Karin"
   },
   "repository": {
