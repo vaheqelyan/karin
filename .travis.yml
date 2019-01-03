@@ -2,8 +2,7 @@ language: node_js
 node_js:
   - node
 before_script:
-  - npm i
-script: npm test
+  - npm run build
 os:
   - linux
   - osx
