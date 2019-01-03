@@ -18,8 +18,8 @@ export default function get(param = {}, ...interpolations) {
         if (b === "raw") {
           settings.encode = "raw";
         }
-        if (b === "content-x") {
-          settings.headers["Content-Type"] = "x";
+        if (b === "json") {
+          settings.encode = "json";
         }
       });
       if (param.origin) {
@@ -40,6 +40,10 @@ export default function get(param = {}, ...interpolations) {
     const normalizeUrl = getForceOptions(str, b => {
       if (b === "raw") {
         settings.encode = "raw";
+      }
+
+      if (b === "json") {
+        settings.encode = "json";
       }
     });
 
