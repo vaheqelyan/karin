@@ -19,16 +19,14 @@ export default function post(param = {}, ...interpolations) {
         if (b === "raw") {
           settings.encode = "raw";
         }
-        if (b === "content-x") {
-          settings.headers["Content-Type"] = "x";
+        if (b === "json") {
+          settings.headers["Content-Type"] = "application/json";
         }
       });
 
       if (param.origin) {
         normalizeUrl = `${param.origin}${normalizeUrl}`;
       }
-      // console.log(`URL -> ${normalizeUrl}`)
-      // console.log(normalizeUrl)
       const parseUrl = parse(normalizeUrl);
 
       var postData = interpolations[interpolations.length - 1];
@@ -51,8 +49,10 @@ export default function post(param = {}, ...interpolations) {
       if (b === "raw") {
         settings.encode = "raw";
       }
+      if (b === "json") {
+        settings.headers["Content-Type"] = "application/json";
+      }
     });
-    // console.log(normalizeUrl)
     const parseUrl = parse(normalizeUrl);
 
     var postData = interpolations[interpolations.length - 1];
