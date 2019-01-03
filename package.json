@@ -5,11 +5,10 @@
   "main": "build/node/index.js",
   "browser": "build/xhr/index.js",
   "scripts": {
-    "test:server": "npm-run-all --race -p server  test",
     "test": "ava",
-    "server": "node server",
-    "build": "rollup -c",
-    "preversion": "npm-run-all build:node build:browser",
+    "preversion": "npm-run-all build:node build:browser test",
+    "z": "npm-run-all build:node build:browser test",
+
     "pretty":
       "prettier --config .prettierrc --write \"test/**/*.js\" \"src/**/*.js\" \"src/**/**/*.js\" \"src/*.js\" \"package.json\" \"tsconfig.json\" ",
     "build:node":
