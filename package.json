@@ -7,7 +7,6 @@
   "scripts": {
     "test": "ava",
     "preversion": "npm-run-all build:node build:browser test",
-    "z": "npm-run-all build:node build:browser test",
 
     "pretty":
       "prettier --config .prettierrc --write \"test/**/*.js\" \"src/**/*.js\" \"src/**/**/*.js\" \"src/*.js\" \"package.json\" \"tsconfig.json\" ",
