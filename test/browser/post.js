@@ -1,6 +1,27 @@
 import test from "ava";
 import { post, karin } from "../../build/browser/index.umd.js";
 
+test("Creating a resource in jsonplaceholder with the json option", async t => {
+  t.plan(2);
+
+  const jsonPlaceholder = post({
+    origin: "https://jsonplaceholder.typicode.com",
+  });
+
+  try {
+    const data = await jsonPlaceholder`/posts ${JSON.stringify({
+      title: "foo",
+      body: "bar",
+      userId: Math.random(),
+    })} --json`;
+    t.is(data.status, 201);
+    t.is(data.data.constructor, Object);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+
 test("Creating a resource in jsonplaceholder and getting a raw response with the origin parameter set", async t => {
   t.plan(2);
 
