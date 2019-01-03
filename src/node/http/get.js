@@ -34,7 +34,6 @@ export default function get(url, params, parse) {
       });
     });
 
-    // Timeout
     if ("timeout" in params) {
       req.setTimeout(params.timeout, function() {
         req.abort();
@@ -46,6 +45,5 @@ export default function get(url, params, parse) {
       }
       reject(err);
     });
-    // End timeout
   });
 }
