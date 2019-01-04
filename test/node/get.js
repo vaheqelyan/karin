@@ -71,8 +71,6 @@ test("Get JSON with interpolation expressions (object value, with a setted origi
   const settings = {
     email: "Jayne_Kuhic@sydney.com",
   };
-  const path = "albums";
-  const id = 3;
 
   const jsonPlaceholder = get({
     origin: "https://jsonPlaceholder.typicode.com",
@@ -90,8 +88,6 @@ test("Get JSON with interpolation expressions (object value, from an instance)",
   const settings = {
     email: "Jayne_Kuhic@sydney.com",
   };
-  const path = "albums";
-  const id = 3;
 
   const jsonPlaceholder = karin.create({
     origin: "https://jsonPlaceholder.typicode.com",
@@ -109,8 +105,6 @@ test("Get JSON with interpolation expressions (object value, from an instance) (
   const settings = {
     email: "Jayne_Kuhic@sydney.com",
   };
-  const path = "albums";
-  const id = 3;
 
   const jsonPlaceholder = karin.create({
     origin: "https://jsonPlaceholder.typicode.com",

@@ -1,3 +1,4 @@
+/*eslint no-console: 0*/
 import test from "ava";
 import { get, karin } from "../../build/browser/index.umd.js";
 
