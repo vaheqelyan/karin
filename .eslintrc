@@ -1,19 +1,19 @@
 {
-	"env": {
-		"browser": true,
-		"es6": true,
-		"node": true
-	},
-	"extends": ["eslint:recommended"],
-	"parserOptions": {
-		"ecmaFeatures": {
-			"experimentalObjectRestSpread": true,
-		},
-		"sourceType": "module"
-	},
-	"parser": "babel-eslint",
-	"rules": {
-		"indent": ["error", 2, { "SwitchCase": 1 }],
-		"semi": ["error", "always"]
-	}
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true
+  },
+  "extends": ["eslint:recommended"],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true
+    },
+    "sourceType": "module"
+  },
+  "parser": "babel-eslint",
+  "rules": {
+    "indent": ["error", 2, { "SwitchCase": 1 }],
+    "semi": ["error", "always"]
+  }
 }
