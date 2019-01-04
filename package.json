@@ -13,7 +13,7 @@
     "lint:fix": "eslint . --fix",
     "test": "ava",
     "preversion": "npm-run-all build:node build:browser test",
-    "pretty": "prettier --config .prettierrc --write \"test/**/*.js\" \"src/**/*.js\" \"src/**/**/*.js\" \"src/*.js\" \"package.json\" \"tsconfig.json\" ",
+    "pretty": "prettier --config .prettierrc --write \".eslintrc\" \"test/**/*.js\" \"src/**/*.js\" \"src/**/**/*.js\" \"src/*.js\" \"package.json\" \"tsconfig.json\" ",
     "build": "npm-run-all build:node build:browser",
     "build:node": "microbundle build -i src/node/index.js --no-compress --no-sourcemap -f cjs --target node",
     "build:browser": "microbundle build -i src/xhr/index.js -o build/browser/index.js --no-compress --no-sourcemap -f umd --target browser --name Karin"
