@@ -1,6 +1,6 @@
 {
   "name": "karin",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "",
   "main": "build/node/index.js",
   "browser": "build/browser/index.umd.js",
