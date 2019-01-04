@@ -20,8 +20,8 @@ function makeUrl(chunks, interpolations, pastLast = false) {
           var generate = generateFromObject(value, "=", "&");
           str += `${key}${generate}`;
         } else {
-          var generate = generateFromObject(value, "/", "/");
-          str += `${key}${generate}`;
+          var generateParams = generateFromObject(value, "/", "/");
+          str += `${key}${generateParams}`;
         }
         continue;
       }
