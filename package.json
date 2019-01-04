@@ -4,6 +4,7 @@
   "description": "",
   "main": "build/node/index.js",
   "browser": "build/browser/index.umd.js",
+  "files":["build/browser","build/node"],
   "scripts": {
     "test": "ava",
     "preversion": "npm-run-all build:node build:browser test",
