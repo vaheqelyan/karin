@@ -26,8 +26,7 @@ export default function get(param = {}, ...interpolations) {
         normalizeUrl = `${param.origin}${normalizeUrl}`;
       }
 
-      const parseUrl = new URL(normalizeUrl);
-      return xhrGet(normalizeUrl, settings, parseUrl);
+      return xhrGet(normalizeUrl, settings);
     };
   } else if (paramType === Array) {
     let settings = {
@@ -47,8 +46,7 @@ export default function get(param = {}, ...interpolations) {
       }
     });
 
-    const parseUrl = new URL(normalizeUrl);
-    return xhrGet(normalizeUrl, settings, parseUrl);
+    return xhrGet(normalizeUrl, settings);
   } else {
     return new Error("The argument must be Object or an template tag");
   }
