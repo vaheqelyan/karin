@@ -1,7 +1,7 @@
 import headersToObjet from "./getHeaders";
 import dataBody from "../../help";
 
-export default function xhrGet(url, params, parse) {
+export default function xhrGet(url, params) {
   return new Promise((resolve, reject) => {
     var xhr = new XMLHttpRequest();
 
@@ -23,7 +23,7 @@ export default function xhrGet(url, params, parse) {
       });
     };
 
-    xhr.onerror = function(err) {
+    xhr.onerror = function() {
       reject(new TypeError("Network request failed"));
     };
 
