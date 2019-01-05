@@ -1,9 +1,19 @@
 {
   "name": "karin",
   "version": "0.5.0",
-  "description": "",
+  "description": "An elegant promise based HTTP client for javascript",
   "main": "build/node/index.js",
   "browser": "build/browser/index.umd.js",
+  "keywords": [
+    "http-requests",
+    "client",
+    "http-client",
+    "node.js",
+    "browser",
+    "javascript",
+    "template literals",
+    "tagged templates"
+  ],
   "files": [
     "build/browser",
     "build/node"
@@ -54,5 +64,8 @@
     "require": [
       "./test/helpers/setup-browser-env.js"
     ]
+  },
+  "engines": {
+    "node": ">=4.9.1"
   }
 }
