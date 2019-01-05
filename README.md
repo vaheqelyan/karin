@@ -4,7 +4,7 @@
   <a href="https://travis-ci.org/vaheqelyan/karin"><img src="https://travis-ci.org/vaheqelyan/karin.svg?branch=master"/></a>
   <a href="https://www.npmjs.com/package/karin"><img  src="https://img.shields.io/npm/v/karin.svg"/></a>
 <a href="#">
-	<img src="https://img.shields.io/badge/node->=4.9.1-brightgreen.svg"/>
+  <img src="https://img.shields.io/badge/node->=4.9.1-brightgreen.svg"/>
 </a>
 <a href="https://bundlephobia.com/result?p=karin@latest"><img src="https://img.shields.io/bundlephobia/minzip/karin.svg?style=flat-square"/></a>
 </p>
@@ -49,15 +49,18 @@ The response data - By default, if the response data type is Application/JSON, t
 ```js
 import { get } from "karin";
 
-get`https://api.github.com/repos/vaheqelyan/karin`.then(res => console.log(res)).catch(err => console.error(err));
+get`https://api.github.com/repos/vaheqelyan/karin`
+  .then(res => console.log(res))
+  .catch(err => console.error(err));
 ```
 
 ### Pattern Samples
 
 ```js
 const user = "vahe",
-  count = 123,
-  filter = true;
+      count = 123,
+      filter = true;
+      
 get`http://domain.com/user${user}`;
 // http://domain.com/user/vahe
 get`http://domain.com/user${user}filter${filter}count${count}`;
@@ -109,7 +112,9 @@ const user = {
   password: "XXXX"
 };
 
-post`http://localhost:3000/register ${user}`.then(res => console.log(res)).catch(err => console.log(err));
+post`http://localhost:3000/register ${user}`
+  .then(res => console.log(res))
+  .catch(err => console.log(err));
 ```
 
 ## Options and Parameters
