@@ -1,6 +1,6 @@
 {
   "name": "karin",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "An elegant promise based HTTP client for javascript",
   "main": "build/node/index.js",
   "browser": "build/browser/index.umd.js",
