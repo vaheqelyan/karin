@@ -15,6 +15,8 @@
 
 Template literals are very useful. A more advanced form of template literals are tagged templates. Karin works in all major browsers (Chrome, Firefox, IE, Edge, Safari, and Opera). Modern browsers and JavaScript engines support tag templates. It is also compatible with Node.js, despite the fact that Karin is mainly for the client side javascript
 
+**Note** Http Request not yet made (node.js)
+
 ## Installataion
 
 **via NPM**
