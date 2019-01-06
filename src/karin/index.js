@@ -5,7 +5,6 @@ const karinUtil = {
   setGetPost(get, post) {
     this.get = get;
     this.post = post;
-    return 10;
   },
   create(params) {
     return {
