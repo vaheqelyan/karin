@@ -1,5 +1,5 @@
 import headersToObjet from "./getHeaders";
-import dataBody from "../../help";
+import { dataBody } from "../../help";
 
 export default function xhrGet(url, params) {
   return new Promise((resolve, reject) => {
