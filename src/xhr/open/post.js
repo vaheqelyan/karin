@@ -1,7 +1,7 @@
 import headersToObjet from "./getHeaders";
-import dataBody from "../../help";
+import { dataBody } from "../../help";
 
-export default function xhrPost(url, params, parse, postData) {
+export default function xhrPost(url, params, postData) {
   return new Promise((resolve, reject) => {
     var xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
