@@ -1,6 +1,6 @@
 import * as http from "http";
 import * as https from "https";
-import dataBody from "../../help";
+import { dataBody } from "../../help";
 
 export default function get(url, params, parse, postData) {
   var protocol = parse.protocol === "https:" ? https : http;
