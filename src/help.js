@@ -21,4 +21,4 @@ function dataBody(contentType, encode, raw) {
     return final;
   }
 }
-export default dataBody;
+export { dataBody };
