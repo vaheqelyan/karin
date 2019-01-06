@@ -2,55 +2,47 @@ import { makeUrl, getForceOptions } from "../template/help";
 import { parse } from "url";
 import nodeGet from "./http/get";
 
-export default function get(param = {}, ...interpolations) {
-  const paramType = param.constructor;
-  if (paramType === Object) {
-    return function(chunks, ...interpolations) {
-      let settings = {
-        headers: {
-          ...param.headers,
-        },
-        encode: "",
-        ...param,
-      };
-      let str: string = makeUrl(chunks, interpolations);
+export default function get(param, ...keys) {
+  var callOrReturn = null;
+  if (param.constructor === Object) {
+    callOrReturn = true;
+  } else {
+    callOrReturn = false;
+  }
 
-      var normalizeUrl = getForceOptions(str, b => {
-        if (b === "raw") {
-          settings.encode = "raw";
-        }
-        if (b === "json") {
-          settings.encode = "json";
-        }
-      });
+  function t() {
+    var chunks = callOrReturn ? arguments[0] : param;
+    var interpolations = callOrReturn ? [].slice.call(arguments, 1) : keys;
 
-      if (param.origin) {
-        normalizeUrl = `${param.origin}${str}`;
-      }
+    var settings = callOrReturn ? param : { headers: {}, encode: "" };
 
-      const parseUrl = parse(normalizeUrl);
-      return nodeGet(normalizeUrl, settings, parseUrl);
-    };
-  } else if (paramType === Array) {
-    let settings = {
-      headers: {},
+    var options = {
+      headers: {
+        ...settings.headers,
+      },
       encode: "",
+      ...settings,
     };
-    let chunks: string[] = param;
-    let str: string = makeUrl(chunks, interpolations);
 
-    const normalizeUrl = getForceOptions(str, b => {
-      if (b === "raw") {
-        settings.encode = "raw";
-      }
+    let str = makeUrl(chunks, interpolations);
+
+    let normalizeUrl = getForceOptions(str, b => {
       if (b === "json") {
-        settings.encode = "json";
+        options.encode = "json";
+      }
+      if (b === "raw") {
+        options.encode = "raw";
       }
     });
 
-    const parseUrl = parse(normalizeUrl);
-    return nodeGet(normalizeUrl, settings, parseUrl);
+    if (options.origin) {
+      normalizeUrl = `${options.origin}${normalizeUrl}`;
+    }
+    return nodeGet(normalizeUrl, options, parse(normalizeUrl));
+  }
+  if (callOrReturn) {
+    return t;
   } else {
-    return new Error("The argument must be Object or an template tag");
+    return t();
   }
 }

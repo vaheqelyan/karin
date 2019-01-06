@@ -1,53 +1,47 @@
 import { makeUrl, getForceOptions } from "../template/help";
 import xhrGet from "./open/get";
 
-export default function get(param = {}, ...interpolations) {
-  const paramType = param.constructor;
-  if (paramType === Object) {
-    return function template(chunks, ...interpolations) {
-      let settings = {
-        headers: {
-          ...param.headers,
-        },
-        encode: "",
-        ...param,
-      };
-      let str = makeUrl(chunks, interpolations);
+export default function get(param, ...keys) {
+  var callOrReturn = null;
+  if (param.constructor === Object) {
+    callOrReturn = true;
+  } else {
+    callOrReturn = false;
+  }
 
-      var normalizeUrl = getForceOptions(str, b => {
-        if (b === "raw") {
-          settings.encode = "raw";
-        }
-        if (b === "json") {
-          settings.encode = "json";
-        }
-      });
-      if (param.origin) {
-        normalizeUrl = `${param.origin}${normalizeUrl}`;
-      }
+  function t() {
+    var chunks = callOrReturn ? arguments[0] : param;
+    var interpolations = callOrReturn ? [].slice.call(arguments, 1) : keys;
 
-      return xhrGet(normalizeUrl, settings);
-    };
-  } else if (paramType === Array) {
-    let settings = {
-      headers: {},
+    var settings = callOrReturn ? param : { headers: {}, encode: "" };
+
+    var options = {
+      headers: {
+        ...settings.headers,
+      },
       encode: "",
+      ...settings,
     };
-    let chunks = param;
-    let str: string = makeUrl(chunks, interpolations);
 
-    const normalizeUrl = getForceOptions(str, b => {
-      if (b === "raw") {
-        settings.encode = "raw";
-      }
+    let str = makeUrl(chunks, interpolations);
 
+    let normalizeUrl = getForceOptions(str, b => {
       if (b === "json") {
-        settings.encode = "json";
+        options.encode = "json";
+      }
+      if (b === "raw") {
+        options.encode = "raw";
       }
     });
 
-    return xhrGet(normalizeUrl, settings);
+    if (options.origin) {
+      normalizeUrl = `${options.origin}${normalizeUrl}`;
+    }
+    return xhrGet(normalizeUrl, options);
+  }
+  if (callOrReturn) {
+    return t;
   } else {
-    return new Error("The argument must be Object or an template tag");
+    return t();
   }
 }

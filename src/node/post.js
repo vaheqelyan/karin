@@ -2,58 +2,29 @@ import { makeUrl, getForceOptions } from "../template/help";
 import { parse } from "url";
 import nodePost from "./http/post";
 
-export default function post(param = {}, ...interpolations) {
-  const paramType = param.constructor;
-  if (paramType === Object) {
-    return function(chunks, ...interpolations) {
-      let settings = {
-        headers: {
-          ...param.headers,
-        },
-        encode: "",
-        ...param,
-      };
-      let str: string = makeUrl(chunks, interpolations, true);
+export default function post(param, ...keys) {
+  var callOrReturn = null;
+  if (param.constructor === Object) {
+    callOrReturn = true;
+  } else {
+    callOrReturn = false;
+  }
 
-      var normalizeUrl = getForceOptions(str, b => {
-        if (b === "raw") {
-          settings.encode = "raw";
-        }
-        if (b === "json") {
-          settings.headers["Content-Type"] = "application/json";
-        }
-      });
+  function t() {
+    var chunks = callOrReturn ? arguments[0] : param;
+    var interpolations = callOrReturn ? [].slice.call(arguments, 1) : keys;
 
-      if (param.origin) {
-        normalizeUrl = `${param.origin}${normalizeUrl}`;
-      }
-      const parseUrl = parse(normalizeUrl);
+    var settings = callOrReturn ? param : { headers: {}, encode: "" };
 
-      var postData = interpolations[interpolations.length - 1];
-      if (typeof postData === "object") {
-        postData = JSON.stringify(postData);
-        settings.headers["Content-Type"] = "application/json";
-      }
-
-      return nodePost(normalizeUrl, settings, parseUrl, postData);
-    };
-  } else if (paramType === Array) {
-    var settings = {
-      headers: {},
+    var options = {
+      headers: {
+        ...settings.headers,
+      },
       encode: "",
+      ...settings,
     };
-    let chunks: string[] = param;
-    let str: string = makeUrl(chunks, interpolations, true);
 
-    const normalizeUrl = getForceOptions(str, b => {
-      if (b === "raw") {
-        settings.encode = "raw";
-      }
-      if (b === "json") {
-        settings.headers["Content-Type"] = "application/json";
-      }
-    });
-    const parseUrl = parse(normalizeUrl);
+    let str = makeUrl(chunks, interpolations);
 
     var postData = interpolations[interpolations.length - 1];
     if (typeof postData === "object") {
@@ -61,8 +32,24 @@ export default function post(param = {}, ...interpolations) {
       settings.headers["Content-Type"] = "application/json";
     }
 
-    return nodePost(normalizeUrl, settings, parseUrl, postData);
+    let normalizeUrl = getForceOptions(str, b => {
+      if (b === "json") {
+        options.headers["Content-Type"] = "application/json";
+      }
+      if (b === "raw") {
+        options.encode = "raw";
+      }
+    });
+
+    if (options.origin) {
+      normalizeUrl = `${options.origin}${normalizeUrl}`;
+    }
+
+    return nodePost(normalizeUrl, options, parse(normalizeUrl), postData);
+  }
+  if (callOrReturn) {
+    return t;
   } else {
-    return new Error("The argument must be Object or an template tag");
+    return t();
   }
 }
