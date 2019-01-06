@@ -116,3 +116,17 @@ test("Get JSON with interpolation expressions (object value, from an instance) (
   t.is(data.status, 200);
   t.is(data.data.constructor, String);
 });
+
+test("Get JSON with interpolation expressions (object value) (--raw)", async t => {
+  t.plan(2);
+
+  const settings = {
+    email: "Jayne_Kuhic@sydney.com",
+  };
+
+  const data = await get`https://jsonPlaceholder.typicode.com/${{
+    albums: 3,
+  }}/comments?${settings} --raw`;
+  t.is(data.status, 200);
+  t.is(data.data.constructor, String);
+});
