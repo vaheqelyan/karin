@@ -1,8 +1,7 @@
 import get from "./get";
-import post from "./post";
 import karinUtil from "../karin/index";
 
-karinUtil.setGetPost(get, post);
+karinUtil.setGetPost(get, ()=>console.log('Http requests are temporarily not supported.'));
 
 const karin = karinUtil;
-export { get, post, karin };
+export { get, karin };
