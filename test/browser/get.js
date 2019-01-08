@@ -100,7 +100,7 @@ test("Get JSON with interpolation expressions (object value, from an instance)",
   t.is(data.data.constructor, Array);
 });
 
-test("Get JSON with interpolation expressions (object value, from an instance) (--raw)", async t => {
+test("Get JSON with interpolation expressions (object value, from an instance) (text)", async t => {
   t.plan(2);
 
   const settings = {
@@ -112,12 +112,12 @@ test("Get JSON with interpolation expressions (object value, from an instance) (
   });
   const data = await jsonPlaceholder.get`/${{
     albums: 3,
-  }}/comments?${settings} --raw`;
+  }}/comments?${settings} --text`;
   t.is(data.status, 200);
   t.is(data.data.constructor, String);
 });
 
-test("Get JSON with interpolation expressions (object value) (--raw)", async t => {
+test("Get JSON with interpolation expressions (object value) (text)", async t => {
   t.plan(2);
 
   const settings = {
@@ -126,7 +126,7 @@ test("Get JSON with interpolation expressions (object value) (--raw)", async t =
 
   const data = await get`https://jsonPlaceholder.typicode.com/${{
     albums: 3,
-  }}/comments?${settings} --raw`;
+  }}/comments?${settings} --text`;
   t.is(data.status, 200);
   t.is(data.data.constructor, String);
 });
