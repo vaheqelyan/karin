@@ -34,7 +34,7 @@ test("Creating a resource in jsonplaceholder and getting a raw response with the
       title: "foo",
       body: "bar",
       userId: Math.random(),
-    }} --raw`;
+    }} --text`;
     t.is(data.status, 201);
     t.is(data.data.constructor, String);
   } catch (err) {
@@ -70,7 +70,7 @@ test("Creating a resource in jsonplaceholder and getting a raw response", async 
       title: "foo",
       body: "bar",
       userId: Math.random(),
-    }} --raw`;
+    }} --text`;
     t.is(data.status, 201);
     t.is(data.data.constructor, String);
   } catch (err) {
