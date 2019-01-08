@@ -1,7 +1,7 @@
 import { makeUrl, processUrl } from "../template/help";
 import fetch from "node-fetch";
 
-export default function get(param, ...keys) {
+export default function post(param, ...keys) {
   var callOrReturn = null;
   if (param.constructor === Object) {
     callOrReturn = true;
@@ -23,11 +23,25 @@ export default function get(param, ...keys) {
       ...settings,
     };
 
-    let str = makeUrl(chunks, interpolations);
+    let str = makeUrl(chunks, interpolations, true);
+
+    let postData = interpolations[interpolations.length - 1];
+
+    if (typeof postData === "object") {
+      if (!options.headers["Content-Type"]) {
+        postData = JSON.stringify(postData);
+        options.headers["Content-Type"] = "application/json";
+      }
+    }
 
     let { normalizeUrl } = processUrl(str, options);
 
-    const startFetch = await fetch(normalizeUrl, options);
+    const startFetch = await fetch(normalizeUrl, {
+      method: "POST",
+      body: postData,
+      ...options,
+    });
+
     let data = {
       data: null,
       statusText: startFetch.statusText,
@@ -35,8 +49,8 @@ export default function get(param, ...keys) {
       url: startFetch.url,
       ok: startFetch.ok,
       headers: startFetch.headers,
-      redirected: startFetch.redirected,
     };
+
     if (!options.encode) {
       if (/^application\/json/.test(startFetch.headers.get("content-type"))) {
         data.data = await startFetch.json();
@@ -44,6 +58,7 @@ export default function get(param, ...keys) {
     } else {
       data.data = await startFetch[options.encode]();
     }
+
     return await data;
   }
   if (callOrReturn) {

@@ -1,5 +1,5 @@
 import { makeUrl, processUrl } from "../template/help";
-import fetch from "node-fetch";
+import { fetch } from "whatwg-fetch";
 
 export default function get(param, ...keys) {
   var callOrReturn = null;
@@ -24,7 +24,6 @@ export default function get(param, ...keys) {
     };
 
     let str = makeUrl(chunks, interpolations);
-
     let { normalizeUrl } = processUrl(str, options);
 
     const startFetch = await fetch(normalizeUrl, options);
@@ -38,7 +37,7 @@ export default function get(param, ...keys) {
       redirected: startFetch.redirected,
     };
     if (!options.encode) {
-      if (/^application\/json/.test(startFetch.headers.get("content-type"))) {
+      if (/^application\/json/.test(startFetch.headers.map["content-type"])) {
         data.data = await startFetch.json();
       }
     } else {
