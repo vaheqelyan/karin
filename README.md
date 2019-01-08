@@ -13,7 +13,7 @@
 
 ## About
 
-Template literals are very useful. A more advanced form of template literals are tagged templates. Karin works in all major browsers (Chrome, Firefox, IE, Edge, Safari, and Opera). Modern browsers and JavaScript engines support tag templates. It is also compatible with Node.js, despite the fact that Karin is mainly for the client side javascript
+Template literals are very useful. A more advanced form of template literals are tagged templates. Karin works in all major browsers (Chrome, Firefox, IE, Edge, Safari, and Opera). Modern browsers and JavaScript engines support tag templates. It is also compatible with Node.js.**Package uses node-fetch for node.js and whatwg-fetch for client javascript**
 
 **Note** Http Request not yet made (node.js)
 
@@ -46,7 +46,7 @@ import { get, post, karin } from "karin/build/browser/index.umd.js";
 
 ## Make a get request
 
-The response data - By default, if the response data type is Application/JSON, the response will be parsed into JSON ( You can set the option `--raw` to unset the processing )
+The response data - By default, if the response data type is Application/JSON, the response will be parsed into JSON
 
 ```js
 import { get } from "karin";
@@ -59,10 +59,10 @@ get`https://api.github.com/repos/vaheqelyan/karin`
 ### Pattern Samples
 
 ```js
-const user = "vahe",
-      count = 123,
-      filter = true;
-      
+const user = "vahe";
+const count = 123;
+const filter = true;
+
 get`http://domain.com/user${user}`;
 // http://domain.com/user/vahe
 get`http://domain.com/user${user}filter${filter}count${count}`;
@@ -82,27 +82,11 @@ get`htpp://domain.com/search/?${{ text: "a", lr: 10262 }}`;
 // http://domain.com/search/?text=your%20query&lr=10262
 ```
 
-### Response Schema
-
-This is the response schema
-
-```json
-{
-  "data": {},
-
-  "status": 200,
-
-  "statusText": "OK",
-
-  "headers": {}
-}
-```
-
 ## Make a post request
 
 The post data - If the data is an object, it will be stringified
 
-The response data - By default, if the response data type is Application/JSON, the response will be parsed into JSON ( You can set the option `--raw` to unset the processing )
+The response data - By default, if the response data type is application/json, the response will be parsed into JSON
 
 **Note** that the data to be sent is the last item.
 
@@ -121,25 +105,43 @@ post`http://localhost:3000/register ${user}`
 
 ## Options and Parameters
 
-`--json` Sets the content type to application/json
+`--json` `--blob` `--arrbuf` `--text`
 
 ```js
-post`http://localhost:3000/register ${JSON.stringify(data)} --json`;
+get`<URL> --text`;
+// •> ▶︎ Promise {<pending>}
 ```
 
-`--raw` Means that the response will not be processed. Works for both get and post requests.
+`--content-json` ― application/json
+
+**WIP...**
+
+Set Request Header
 
 ```js
-post`http://localhost:3000/path --raw`;
+post({ headers: { XXX: "xxx" } })`<URL> ${{}}`;
 ```
 
-Set the parameters for both get and post requests.
-
-- origin - The URL origin
-- headers - Set header in header object
-- timeout - Set timeout
+Set URL origin
 
 ```js
-const github = get({ origin: "http://api.github.com", timeout: 1000 /**/ });
-github`/repos/${user}/${repo}`;
+const github = get({ origin: "https://api.github.com" });
+github`/users/vaheqelyan`;
+// •> ▶︎ Promise {<pending>}
+```
+
+## Instance
+
+```js
+import { karin } from "karin";
+
+const domain = karin.create({
+  origin: "...",
+  headers: {
+    /**/
+  }
+});
+
+domain.post``;
+domain.get``;
 ```
