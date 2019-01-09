@@ -56,7 +56,7 @@ get`https://api.github.com/repos/vaheqelyan/karin`
   .catch(err => console.error(err));
 ```
 
-### Pattern Samples
+### Samples
 
 ```js
 const user = "vahe";
