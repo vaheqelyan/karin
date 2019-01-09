@@ -2,12 +2,7 @@ import { makeUrl, processUrl } from "../template/help";
 import fetch from "node-fetch";
 
 export default function get(param, ...keys) {
-  var callOrReturn = null;
-  if (param.constructor === Object) {
-    callOrReturn = true;
-  } else {
-    callOrReturn = false;
-  }
+  var callOrReturn = param.constructor === Object;
 
   async function t() {
     var chunks = callOrReturn ? arguments[0] : param;
@@ -37,12 +32,13 @@ export default function get(param, ...keys) {
       headers: startFetch.headers,
       redirected: startFetch.redirected,
     };
-    if (!options.encode) {
+    const { encode } = options;
+    if (!encode) {
       if (/^application\/json/.test(startFetch.headers.get("content-type"))) {
         data.data = await startFetch.json();
       }
     } else {
-      data.data = await startFetch[options.encode]();
+      data.data = await startFetch[encode]();
     }
     return await data;
   }
