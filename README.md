@@ -114,6 +114,8 @@ get`<URL> --text`;
 
 `--content-json` ― application/json
 
+`--content-x` - application/x-www-form-urlencoded
+
 **WIP...**
 
 Set Request Header
