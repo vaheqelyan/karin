@@ -73,6 +73,10 @@ function processUrl(url, options) {
           options.headers["Content-Type"] = "application/json";
         }
 
+        if (value === "--content-x") {
+          options.headers["Content-Type"] = "application/x-www-form-urlencoded";
+        }
+
         if (value === "--arrbuf") {
           options.encode = "arrayBuffer";
         }
