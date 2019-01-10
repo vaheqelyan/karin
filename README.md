@@ -18,7 +18,6 @@ Template literals are very useful. A more advanced form of template literals are
 
 ```jsx
 import React from "react";
-import Link from "next/link";
 import { get } from "karin";
 
 export default class Index extends React.Component {
