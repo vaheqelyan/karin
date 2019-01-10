@@ -16,6 +16,27 @@
 Template literals are very useful. A more advanced form of template literals are tagged templates. Karin works in all major browsers (Chrome, Firefox, IE, Edge, Safari, and Opera). Modern browsers and JavaScript engines support tag templates. It is also compatible with Node.js.
 **The package uses the Fetch API, make sure you have a polyfill to support older browsers**
 
+```jsx
+import React from "react";
+import Link from "next/link";
+import { get } from "karin";
+
+export default class Index extends React.Component {
+  static async getInitialProps() {
+    const { data } = await get`https://api.github.com/repos/zeit/next.js`;
+    return { stars: data.stargazers_count };
+  }
+
+  render() {
+    return (
+      <div>
+        <p> {this.props.stars} ⭐️</p>
+      </div>
+    );
+  }
+}
+```
+
 ## Installataion
 
 **via NPM**
