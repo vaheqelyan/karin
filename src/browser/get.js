@@ -1,5 +1,4 @@
 import { makeUrl, processUrl } from "../template/help";
-import { fetch } from "whatwg-fetch";
 
 export default function get(param, ...keys) {
   var callOrReturn = param.constructor === Object;
@@ -33,7 +32,7 @@ export default function get(param, ...keys) {
     };
     const { encode } = options;
     if (!encode) {
-      if (/^application\/json/.test(startFetch.headers.map["content-type"])) {
+      if (/^application\/json/.test(startFetch.headers.get("content-type"))) {
         data.data = await startFetch.json();
       }
     } else {
