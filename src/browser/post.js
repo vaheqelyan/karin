@@ -1,5 +1,4 @@
 import { makeUrl, processUrl } from "../template/help";
-import { fetch } from "whatwg-fetch";
 
 export default function post(param, ...keys) {
   var callOrReturn = param.constructor === Object;
