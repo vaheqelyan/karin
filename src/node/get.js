@@ -1,10 +1,11 @@
-import { makeUrl } from "../template/help";
+import { makeUrl, parseHeaders } from "../template/help";
 import fetch from "node-fetch";
 
 export default async function get(chunks, ...interpolations) {
-  let { url, headers } = makeUrl(chunks, interpolations);
+  const url = makeUrl(chunks, interpolations);
+  const { headers, pureUrl } = parseHeaders(url);
 
-  const startFetch = await fetch(url, {
+  const startFetch = await fetch(pureUrl, {
     method: "GET",
     headers: headers,
   });

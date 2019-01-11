@@ -1,7 +1,8 @@
-import { makeUrl } from "../template/help";
+import { makeUrl, parseHeaders } from "../template/help";
 
 export default async function post(chunks, ...interpolations) {
-  let { url, headers } = makeUrl(chunks, interpolations, true);
+  const url = makeUrl(chunks, interpolations, true);
+  const { headers, pureUrl } = parseHeaders(url);
 
   let postData = interpolations[interpolations.length - 1];
 
@@ -12,7 +13,7 @@ export default async function post(chunks, ...interpolations) {
     }
   }
 
-  const startFetch = await fetch(url, {
+  const startFetch = await fetch(pureUrl, {
     method: "POST",
     body: postData,
     headers: headers,
