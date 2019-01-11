@@ -1,6 +1,6 @@
 /*eslint no-console: 0*/
 import test from "ava";
-import { get, karin } from "../../build/browser/index.umd.js";
+import { get } from "../../build/browser/index.umd.js";
 
 test("Get JSON without interpolating expressions", async t => {
   t.plan(2);
@@ -15,16 +15,6 @@ test("Get JSON with interpolating expressions (numeric value)", async t => {
   const todoId = 1;
 
   const data = await get`https://jsonplaceholder.typicode.com/todos/${todoId}`;
-  t.is(data.status, 200);
-  t.is(data.data.constructor, Object);
-});
-
-test("Get JSON with an interpolation expression, without a slash after the query", async t => {
-  t.plan(2);
-
-  const todoId = 1;
-
-  const data = await get`https://jsonplaceholder.typicode.com/todos${todoId}`;
   t.is(data.status, 200);
   t.is(data.data.constructor, Object);
 });
@@ -64,69 +54,4 @@ test("Get JSON with interpolation expression (numeric value, string value)", asy
   const data = await get`https://jsonplaceholder.typicode.com/${path}/${id}/comments?${settings}`;
   t.is(data.status, 200);
   t.is(data.data.constructor, Array);
-});
-
-test("Get JSON with interpolation expressions (object value, with a setted origin parameter)", async t => {
-  t.plan(2);
-
-  const settings = {
-    email: "Jayne_Kuhic@sydney.com",
-  };
-
-  const jsonPlaceholder = get({
-    origin: "https://jsonPlaceholder.typicode.com",
-  });
-  const data = await jsonPlaceholder`/${{
-    albums: 3,
-  }}/comments?${settings}`;
-  t.is(data.status, 200);
-  t.is(data.data.constructor, Array);
-});
-
-test("Get JSON with interpolation expressions (object value, from an instance)", async t => {
-  t.plan(2);
-
-  const settings = {
-    email: "Jayne_Kuhic@sydney.com",
-  };
-
-  const jsonPlaceholder = karin.create({
-    origin: "https://jsonPlaceholder.typicode.com",
-  });
-  const data = await jsonPlaceholder.get`/${{
-    albums: 3,
-  }}/comments?${settings}`;
-  t.is(data.status, 200);
-  t.is(data.data.constructor, Array);
-});
-
-test("Get JSON with interpolation expressions (object value, from an instance) (text)", async t => {
-  t.plan(2);
-
-  const settings = {
-    email: "Jayne_Kuhic@sydney.com",
-  };
-
-  const jsonPlaceholder = karin.create({
-    origin: "https://jsonPlaceholder.typicode.com",
-  });
-  const data = await jsonPlaceholder.get`/${{
-    albums: 3,
-  }}/comments?${settings} --text`;
-  t.is(data.status, 200);
-  t.is(data.data.constructor, String);
-});
-
-test("Get JSON with interpolation expressions (object value) (text)", async t => {
-  t.plan(2);
-
-  const settings = {
-    email: "Jayne_Kuhic@sydney.com",
-  };
-
-  const data = await get`https://jsonPlaceholder.typicode.com/${{
-    albums: 3,
-  }}/comments?${settings} --text`;
-  t.is(data.status, 200);
-  t.is(data.data.constructor, String);
 });
