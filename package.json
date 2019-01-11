@@ -19,7 +19,7 @@
     "build/node"
   ],
   "scripts": {
-    "go": "npm-run-all lint build:node build:browser pretty test",
+    "go": "npm-run-all pretty lint build:node build:browser test",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "test": "ava",
