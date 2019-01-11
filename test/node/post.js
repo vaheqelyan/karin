@@ -2,6 +2,25 @@
 import test from "ava";
 import { post } from "../../build/browser/index.umd.js";
 
+test("Creating a resource in jsonplaceholder. (Content-Type)", async t => {
+  t.plan(2);
+
+  try {
+    const _post = {
+      title: "foo",
+      body: "bar",
+      userId: Math.random(),
+    };
+    const data = await post`https://jsonplaceholder.typicode.com/posts
+    Content-type: application/json
+    ${JSON.stringify(_post)}`;
+    t.is(data.status, 201);
+    t.is(data.data.constructor, Object);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 test("Creating a resource in jsonplaceholder.", async t => {
   t.plan(2);
 
