@@ -71,9 +71,9 @@ function parseHeaders(res) {
   res.split("\n").forEach(value => {
     var getIndex = value.indexOf(":");
     if (getIndex !== -1) {
-      const key = value.slice(0, getIndex);
-      const val = value.slice(getIndex + 1, value.length);
-      headers[key] = val.trimLeft();
+      const key = value.slice(0, getIndex).trim();
+      const val = value.slice(getIndex + 1, value.length).trim();
+      headers[key] = val;
     }
   });
   return headers;
