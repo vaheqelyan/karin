@@ -5,12 +5,9 @@ export default async function post(chunks, ...interpolations) {
   const { headers, pureUrl } = parseHeaders(url);
 
   let postData = interpolations[interpolations.length - 1];
-
   if (typeof postData === "object") {
-    if (!headers["Content-Type"]) {
-      postData = JSON.stringify(postData);
-      headers["Content-Type"] = "application/json";
-    }
+    postData = JSON.stringify(postData);
+    headers["Content-Type"] = "application/json";
   }
 
   const startFetch = await fetch(pureUrl, {
