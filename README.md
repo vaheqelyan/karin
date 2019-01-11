@@ -16,6 +16,7 @@
 Template literals are very useful. A more advanced form of template literals are tagged templates. Karin works in all major browsers (Chrome, Firefox, IE, Edge, Safari, and Opera). Modern browsers and JavaScript engines support tag templates. It is also compatible with Node.js.
 **The package uses the Fetch API, make sure you have a polyfill to support older browsers**. Recommend to use [github/fetch](https://github.com/github/fetch)
 
+e.g.
 ```jsx
 import React from "react";
 import { get } from "karin";
@@ -59,8 +60,8 @@ const { get, post } = Karin;
 Import paths
 
 ```js
-import { get, post, karin } from "karin/build/node";
-import { get, post, karin } from "karin/build/browser/index.umd.js";
+import { get, post } from "karin/build/node";
+import { get, post } from "karin/build/browser/index.umd.js";
 ```
 
 ## Make a get request
@@ -73,32 +74,6 @@ import { get } from "karin";
 get`https://api.github.com/repos/vaheqelyan/karin`
   .then(res => console.log(res))
   .catch(err => console.error(err));
-```
-
-### Samples
-
-```js
-const user = "vahe";
-const count = 123;
-const filter = true;
-
-get`http://domain.com/user${user}`;
-// http://domain.com/user/vahe
-get`http://domain.com/user${user}filter${filter}count${count}`;
-// http://domain.com/user/vahe/filter/true/count/123
-get`http://domain.com/path${{
-  user,
-  filter,
-  count
-}}`;
-// http://domain.com/path/user/vaheqelyan/filter/true/count/123
-
-const sub = "api.";
-get`http://${sub}domain/${{ foo: "bar" }}`;
-// Also works http://api.domain.com/foo/bar
-
-get`htpp://domain.com/search/?${{ text: "a", lr: 10262 }}`;
-// http://domain.com/search/?text=your%20query&lr=10262
 ```
 
 ## Make a post request
@@ -122,47 +97,19 @@ post`http://localhost:3000/register ${user}`
   .catch(err => console.log(err));
 ```
 
-## Options and Parameters
-
-`--json` `--blob` `--arrbuf` `--text`
+## Add Header in HTTP Request
 
 ```js
-get`<URL> --text`;
-// •> ▶︎ Promise {<pending>}
+post`https://example.com/api.createMsg?${{apiKey: config.apiKey}}
+Content-Type: application/json
+Accept: application/json
+XXX: xxx
+
+${{
+  title: 'Test Message',
+  body: 'This is a test of the messaging system.'
+}}`
 ```
+Thanks to [Ken Bellows](https://dev.to/kenbellows/comment/83m6) for the idea.
 
-`--content-json` ― application/json
-
-`--content-x` - application/x-www-form-urlencoded
-
-**WIP...**
-
-Set Request Header
-
-```js
-post({ headers: { XXX: "xxx" } })`<URL> ${{}}`;
-```
-
-Set URL origin
-
-```js
-const github = get({ origin: "https://api.github.com" });
-github`/users/vaheqelyan`;
-// •> ▶︎ Promise {<pending>}
-```
-
-## Instance
-
-```js
-import { karin } from "karin";
-
-const domain = karin.create({
-  origin: "...",
-  headers: {
-    /**/
-  }
-});
-
-domain.post``;
-domain.get``;
-```
+See Version [0.11.1](https://github.com/vaheqelyan/karin/tree/v0.11.1) for old syntax
