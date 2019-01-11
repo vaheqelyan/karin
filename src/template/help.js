@@ -96,4 +96,17 @@ function generateFromObject(obj, join1, join2) {
     .join(join2);
 }
 
-export { generateFromObject, processUrl, makeUrl };
+function parseHeaders(res) {
+  let headers = {};
+  res.split("\n").forEach(value => {
+    var getIndex = value.indexOf(":");
+    if (getIndex !== -1) {
+      const key = value.slice(0, getIndex);
+      const val = value.slice(getIndex + 1, value.length);
+      headers[key] = val.trimLeft();
+    }
+  });
+  return headers;
+}
+
+export { generateFromObject, processUrl, makeUrl, parseHeaders };
