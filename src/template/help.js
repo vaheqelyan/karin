@@ -64,4 +64,4 @@ function parseHeaders(res) {
   return headers;
 }
 
-export { generateFromObject, processUrl, makeUrl, parseHeaders };
+export { generateFromObject, makeUrl, parseHeaders };
