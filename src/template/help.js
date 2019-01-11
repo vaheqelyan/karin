@@ -1,6 +1,7 @@
 function makeUrl(chunks, interpolations, pastLast = false) {
   var str = "";
   let lastIndex = 0;
+  let headers = {};
   if (pastLast) {
     lastIndex = interpolations.length - 1;
   }
@@ -8,6 +9,20 @@ function makeUrl(chunks, interpolations, pastLast = false) {
   for (var i = 0; i < chunks.length; i++) {
     const key = chunks[i];
     let value = interpolations[i];
+
+    if (key.indexOf("\n") !== -1) {
+      var k = key;
+      var v =
+        value !== undefined
+          ? value.constructor === Object
+            ? (v = "")
+            : (v = value)
+          : "";
+
+      var res = `${k}${v}`;
+      headers = { ...headers, ...parseHeaders(res) };
+      continue;
+    }
 
     if (pastLast && i === lastIndex) {
       str += key;
@@ -20,8 +35,10 @@ function makeUrl(chunks, interpolations, pastLast = false) {
           var generate = generateFromObject(value, "=", "&");
           str += `${key}${generate}`;
         } else {
-          var generateParams = generateFromObject(value, "/", "/");
-          str += `${key}${generateParams}`;
+          if (key[key.length - 1] !== "\n") {
+            var generateParams = generateFromObject(value, "/", "/");
+            str += `${key}${generateParams}`;
+          }
         }
         continue;
       }
@@ -33,14 +50,12 @@ function makeUrl(chunks, interpolations, pastLast = false) {
     }
 
     value += "";
-
-    if (/[a-z]/.test(key[key.length - 1])) {
-      str += `${key}/${value}`;
-    } else {
-      str += `${key}${value}`;
-    }
+    str += `${key}${value}`;
   }
-  return str;
+  return {
+    url: str,
+    headers,
+  };
 }
 
 function generateFromObject(obj, join1, join2) {
