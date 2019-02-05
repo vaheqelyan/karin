@@ -1,4 +1,4 @@
-import { makeUrl, parseHeaders } from "../template/help";
+import { makeUrl, parseHeaders, handleResponse } from "../template/help";
 import fetch from "node-fetch";
 
 export default async function post(chunks, ...interpolations) {
@@ -14,23 +14,11 @@ export default async function post(chunks, ...interpolations) {
     }
   }
 
-  const startFetch = await fetch(pureUrl, {
+  const response = await fetch(pureUrl, {
     method: "POST",
     body: postData,
     headers: headers,
   });
 
-  let data = {
-    data: null,
-    statusText: startFetch.statusText,
-    status: startFetch.status,
-    url: startFetch.url,
-    ok: startFetch.ok,
-    headers: startFetch.headers,
-  };
-  if (/^application\/json/.test(startFetch.headers.get("content-type"))) {
-    data.data = await startFetch.json();
-  }
-
-  return await data;
+  return await handleResponse(response);
 }

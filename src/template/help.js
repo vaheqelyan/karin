@@ -69,4 +69,13 @@ function parseHeaders(url) {
   return { headers, pureUrl };
 }
 
-export { generateFromObject, makeUrl, parseHeaders };
+async function handleResponse(response) {
+  if (/^application\/json/.test(response.headers.get("content-type"))) {
+    const data = await response.json();
+    return { response, data };
+  }
+
+  return response;
+}
+
+export { generateFromObject, makeUrl, parseHeaders, handleResponse };
