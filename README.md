@@ -1,3 +1,4 @@
+
 # Karin
 
 <p>
@@ -23,7 +24,7 @@ import { get } from "karin";
 
 export default class Index extends React.Component {
   static async getInitialProps() {
-    const { data } = await get`https://api.github.com/repos/zeit/next.js`;
+    const { data, response } = await get`https://api.github.com/repos/zeit/next.js`;
     return { stars: data.stargazers_count };
   }
 
@@ -72,7 +73,7 @@ The response data - By default, if the response data type is Application/JSON, t
 import { get } from "karin";
 
 get`https://api.github.com/repos/vaheqelyan/karin`
-  .then(res => console.log(res))
+  .then(result => console.log(result))
   .catch(err => console.error(err));
 ```
 
@@ -93,7 +94,7 @@ const user = {
 };
 
 post`http://localhost:3000/register ${user}`
-  .then(res => console.log(res))
+  .then(result => console.log(result))
   .catch(err => console.log(err));
 ```
 
