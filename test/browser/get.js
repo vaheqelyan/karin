@@ -4,9 +4,9 @@ import { get } from "../../build/browser/index.umd.js";
 
 test("Get JSON without interpolating expressions", async t => {
   t.plan(2);
-  const data = await get`https://jsonplaceholder.typicode.com/todos/1`;
-  t.is(data.status, 200);
-  t.is(data.data.constructor, Object);
+  const { response, data } = await get`https://jsonplaceholder.typicode.com/todos/1`;
+  t.is(response.status, 200);
+  t.is(data.constructor, Object);
 });
 
 test("Get JSON with interpolating expressions (numeric value)", async t => {
@@ -14,9 +14,9 @@ test("Get JSON with interpolating expressions (numeric value)", async t => {
 
   const todoId = 1;
 
-  const data = await get`https://jsonplaceholder.typicode.com/todos/${todoId}`;
-  t.is(data.status, 200);
-  t.is(data.data.constructor, Object);
+  const { response, data } = await get`https://jsonplaceholder.typicode.com/todos/${todoId}`;
+  t.is(response.status, 200);
+  t.is(data.constructor, Object);
 });
 
 test("Get JSON with an interpolation expression (object value, List of URL request parameters)", async t => {
@@ -26,9 +26,9 @@ test("Get JSON with an interpolation expression (object value, List of URL reque
     postId: 3,
   };
 
-  const data = await get`http://jsonplaceholder.typicode.com/comments?${settings}`;
-  t.is(data.status, 200);
-  t.is(data.data.constructor, Array);
+  const { response, data } = await get`http://jsonplaceholder.typicode.com/comments?${settings}`;
+  t.is(response.status, 200);
+  t.is(data.constructor, Array);
 });
 
 test("Get JSON with an interpolation expression (object value, List of URL request parameters) #2", async t => {
@@ -38,9 +38,9 @@ test("Get JSON with an interpolation expression (object value, List of URL reque
     postId: 3,
   };
   const path = "albums";
-  const data = await get`http://jsonplaceholder.typicode.com/${path}?${settings}`;
-  t.is(data.status, 200);
-  t.is(data.data.constructor, Array);
+  const { response, data } = await get`http://jsonplaceholder.typicode.com/${path}?${settings}`;
+  t.is(response.status, 200);
+  t.is(data.constructor, Array);
 });
 
 test("Get JSON with interpolation expression (numeric value, string value)", async t => {
@@ -51,7 +51,7 @@ test("Get JSON with interpolation expression (numeric value, string value)", asy
   };
   const path = "albums";
   const id = 3;
-  const data = await get`https://jsonplaceholder.typicode.com/${path}/${id}/comments?${settings}`;
-  t.is(data.status, 200);
-  t.is(data.data.constructor, Array);
+  const { response, data } = await get`https://jsonplaceholder.typicode.com/${path}/${id}/comments?${settings}`;
+  t.is(response.status, 200);
+  t.is(data.constructor, Array);
 });
