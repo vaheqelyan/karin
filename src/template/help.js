@@ -5,8 +5,11 @@ function makeUrl(chunks, interpolations, pastLast = false) {
     lastIndex = interpolations.length - 1;
   }
 
-  for (var i = 0; i < chunks.length; i++) {
+  const { length } = chunks;
+
+  for (var i = 0; i < length; i++) {
     const key = chunks[i];
+    const { length: keyLength } = key;
     let value = interpolations[i];
 
     if (pastLast && i === lastIndex) {
@@ -16,11 +19,11 @@ function makeUrl(chunks, interpolations, pastLast = false) {
 
     if (value !== undefined) {
       if (typeof value === "object") {
-        if (key[key.length - 1] === "?") {
+        if (key[keyLength - 1] === "?") {
           var generate = generateFromObject(value, "=", "&");
           str += `${key}${generate}`;
         } else {
-          if (key[key.length - 1] !== "\n") {
+          if (key[keyLength - 1] !== "\n") {
             var generateParams = generateFromObject(value, "/", "/");
             str += `${key}${generateParams}`;
           }
