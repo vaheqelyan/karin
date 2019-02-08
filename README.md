@@ -38,7 +38,7 @@ export default class Index extends React.Component {
 }
 ```
 
-## Installataion
+## Installation
 
 **via NPM**
 
